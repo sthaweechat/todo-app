@@ -69,12 +69,18 @@ export default function TodoList() {
   //   setTodoList(newTodoList);
   // }
 
-  // ลบ todo วิธี2
-  const deleteTodoItem = (id) => {
-    const newTodoList = [...todoList]; //ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
-    const targetIndex = newTodoList.findIndex((todo) => todo.id === id); //หา todoอันไหนที่มีไอดีเท่ากับที่ส่งค่ามา
-    newTodoList.splice(targetIndex, 1); //ทำการตัด indexนั้นออก
-    setTodoList(newTodoList);
+  // ลบ todo วิธี2 แบบไม่เชื่อม backend
+  // const deleteTodoItem = (id) => {
+  //   const newTodoList = [...todoList]; //ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
+  //   const targetIndex = newTodoList.findIndex((todo) => todo.id === id); //หา todoอันไหนที่มีไอดีเท่ากับที่ส่งค่ามา
+  //   newTodoList.splice(targetIndex, 1); //ทำการตัด indexนั้นออก
+  //   setTodoList(newTodoList);
+  // };
+
+  //ลบ todo แบบเชื่อม backend
+  const deleteTodoItem = async(id) => {
+    await axios.delete(`http://localhost:8000/todo-list/${id}`);//ทำการลบข้อมูล
+    fetchTodoList();//ทำการอัพเดตข้อมูลมาใหม่
   };
 
   return (
