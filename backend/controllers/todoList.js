@@ -9,7 +9,7 @@ const getTodoList = (req, res) => {
 const addTodoList = (req, res) => {
     const newTodo = {
         id: Number(uniqueId()),
-        task: req.body.task
+        title: req.body.title
     };
 
     todoList.push(newTodo);
@@ -25,11 +25,11 @@ const deleteTodoList = (req, res) => {
 
 const updateTodoList = (req, res) => {
     const targetId = Number(req.params.id);
-    const newTask = req.body.task;
+    const newTitle = req.body.title;
     const targetIndex = todoList.findIndex(todo => todo.id === targetId);
     todoList[targetIndex] = {
         id: targetId,
-        task: newTask
+        title: newTitle
     };
     res.status(200).send({ message: "updating is success" });
 };
