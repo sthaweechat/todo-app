@@ -45,6 +45,21 @@ export default function TodoList() {
   };
 
 
+  //ลบ todo วิธี1
+  // const deleteTodoItem = (id)=>{
+  //   const newTodoList = todoList.filter(todo => todo.id !== id); //ทำการฟิลเตอร์แสดงยกเว้นไอดีที่เลือก
+  //   setTodoList(newTodoList);
+  // }
+
+  // ลบ todo วิธี2
+  const deleteTodoItem = (id)=>{
+    const newTodoList = [...todoList]; //ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
+    const targetIndex = newTodoList.findIndex(todo => todo.id === id);//หา todoอันไหนที่มีไอดีเท่ากับที่ส่งค่ามา
+    newTodoList.splice(targetIndex,1);//ทำการตัด indexนั้นออก
+    setTodoList(newTodoList);
+
+  }
+
 
   return (
     <Row justify="center">
@@ -82,12 +97,12 @@ export default function TodoList() {
                   <Col span={20}>
                     <Row justify="start">
                       {todo.title}
-
+                      {`onClick={()=>deleteTodoItem(${todo.id})}`}
                       </Row>
                   </Col>
                   <Col span={4}>
                     <Row justify="end">
-                      <Button danger >Delete</Button>
+                      <Button danger onClick={()=>deleteTodoItem(todo.id)}>Delete</Button>
                     </Row>
                   </Col>
                 </Row>
