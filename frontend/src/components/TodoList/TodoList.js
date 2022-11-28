@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col, Divider, Input, List, Row, Typography } from "antd";
-import _ from "lodash";
+// import _ from "lodash";
 import axios from "axios";
+import Todo from "./Todo";
 
 const { Text } = Typography;
 
@@ -115,21 +116,7 @@ export default function TodoList() {
             dataSource={todoList}
             renderItem={(todo) => (
               <List.Item>
-                <Row style={{ width: "100%" }}>
-                  <Col span={20}>
-                    <Row justify="start">
-                      {todo.title}
-                      {/* {`onClick={()=>deleteTodoItem(${todo.id})}`} */}
-                    </Row>
-                  </Col>
-                  <Col span={4}>
-                    <Row justify="end">
-                      <Button danger onClick={() => deleteTodoItem(todo.id)}>
-                        Delete
-                      </Button>
-                    </Row>
-                  </Col>
-                </Row>
+                <Todo delete={deleteTodoItem} todo={todo} fetchData={fetchTodoList}/>
               </List.Item>
             )}
           />
