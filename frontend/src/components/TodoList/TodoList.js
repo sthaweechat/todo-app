@@ -2,11 +2,15 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col, Divider, Input, List, Row, Typography } from "antd";
 import _ from "lodash";
+import axios from "axios";
+
 const { Text } = Typography;
 
 export default function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const [inputField, setInputField] = useState("");
+
+
   // useEffect(() => {
   //   setTodoList([
   //     {
@@ -32,9 +36,9 @@ export default function TodoList() {
   //   ]);
   // }, []);
 
-  //เพิ่ม todo
+  //เพิ่ม todo แบบไม่เชื่อมต่อ backend
   const addTodoItem = () => {
-  const newTodoList = [...todoList]; // ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
+    const newTodoList = [...todoList]; // ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
     //ทำการ push ของใหม่ ไว้ใน newTodoList
     newTodoList.push({
       id: _.uniqueId(), //ใช้ uniqueId จาก lodash auto++
@@ -52,14 +56,12 @@ export default function TodoList() {
   // }
 
   // ลบ todo วิธี2
-  const deleteTodoItem = (id)=>{
+  const deleteTodoItem = (id) => {
     const newTodoList = [...todoList]; //ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
-    const targetIndex = newTodoList.findIndex(todo => todo.id === id);//หา todoอันไหนที่มีไอดีเท่ากับที่ส่งค่ามา
-    newTodoList.splice(targetIndex,1);//ทำการตัด indexนั้นออก
+    const targetIndex = newTodoList.findIndex((todo) => todo.id === id); //หา todoอันไหนที่มีไอดีเท่ากับที่ส่งค่ามา
+    newTodoList.splice(targetIndex, 1); //ทำการตัด indexนั้นออก
     setTodoList(newTodoList);
-
-  }
-
+  };
 
   return (
     <Row justify="center">
@@ -97,12 +99,14 @@ export default function TodoList() {
                   <Col span={20}>
                     <Row justify="start">
                       {todo.title}
-                      {`onClick={()=>deleteTodoItem(${todo.id})}`}
-                      </Row>
+                      {/* {`onClick={()=>deleteTodoItem(${todo.id})}`} */}
+                    </Row>
                   </Col>
                   <Col span={4}>
                     <Row justify="end">
-                      <Button danger onClick={()=>deleteTodoItem(todo.id)}>Delete</Button>
+                      <Button danger onClick={() => deleteTodoItem(todo.id)}>
+                        Delete
+                      </Button>
                     </Row>
                   </Col>
                 </Row>
