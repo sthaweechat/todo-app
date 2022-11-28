@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { Input, Button, Col, Row } from "antd";
-import axios from "axios";
+import axios from "../../config/axios";
 
 export default function Todo(props) {
   const [changeInput, setChangeInput] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const updateTodoItem = async (id) => {
-    await axios.put(`http://localhost:8000/todo-list/${id}`, {
+    await axios.put(`/todo-list/${id}`, {
       title: changeInput,
     });
     props.fetchData();//ทำการอัพเดตข้อมูลมาใหม่

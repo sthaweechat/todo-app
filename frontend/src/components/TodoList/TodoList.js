@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col, Divider, Input, List, Row, Typography } from "antd";
 // import _ from "lodash";
-import axios from "axios";
+import axios from "../../config/axios";
 import Todo from "./Todo";
 
 const { Text } = Typography;
@@ -13,7 +13,7 @@ export default function TodoList() {
 
   //เอาข้อมูลจาก backend มาแสดง
   const fetchTodoList = async () => {
-    const httpResponse = await axios.get("http://localhost:8000/todo-list");
+    const httpResponse = await axios.get("/todo-list");
     setTodoList(httpResponse.data); //เอาค่าที่ดึงมาจาก httpResponse มาไว้ในsetTodoList
   };
 
@@ -61,7 +61,7 @@ export default function TodoList() {
 
   //เพิ่ม todo แบบเชื่อมต่อ backend
   const addTodoItem = async() => {
-    await axios.post('http://localhost:8000/todo-list',{title: inputField});//ทำการเพิ่มข้อมูลtitle จาก inputField
+    await axios.post('/todo-list',{title: inputField});//ทำการเพิ่มข้อมูลtitle จาก inputField
     fetchTodoList(); //ทำการอัพเดตข้อมูลมาใหม่
   }
   //ลบ todo วิธี1
@@ -80,7 +80,7 @@ export default function TodoList() {
 
   //ลบ todo แบบเชื่อม backend
   const deleteTodoItem = async(id) => {
-    await axios.delete(`http://localhost:8000/todo-list/${id}`);//ทำการลบข้อมูล
+    await axios.delete(`/todo-list/${id}`);//ทำการลบข้อมูล
     fetchTodoList();//ทำการอัพเดตข้อมูลมาใหม่
   };
 
