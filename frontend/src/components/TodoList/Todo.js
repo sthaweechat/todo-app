@@ -10,21 +10,18 @@ export default function Todo(props) {
     await axios.put(`http://localhost:8000/todo-list/${id}`, {
       title: changeInput,
     });
-    props.fetchData();
-    setIsEdit(false);
+    props.fetchData();//ทำการอัพเดตข้อมูลมาใหม่
+    setIsEdit(false);//ไม่ใช้โหมดแก้ไขข้อมูล
   };
 
   const toggleEdit = () =>{
-    setChangeInput(props.todo.title);
-    setIsEdit(true)
+    setChangeInput(props.todo.title);//เรียกข้อมูลtitle จากbackend มาไว้ในsetChangeInput
+    setIsEdit(true)//ใช้โหมดแก้ไขข้อมูล
   }
 
-  return (
-    <div style={{ width: "100%" }}>
-      {/* กำหนดว่าทำการกดแก้ไขหรือไม่ */}
-      {/* ใช่ */}
-      {isEdit ? (
-        <Row style={{ width: "100%" }}>
+  //ถ้าใช้โหมดแก้ไขข้อมูล content มีค่าดังนี้
+  let contents = (
+    <Row style={{ width: "100%" }}>
           <Col span={20}>
             <Row justify="start">
               <Input
@@ -42,9 +39,11 @@ export default function Todo(props) {
             </Button>
           </Col>
         </Row>
-      ) : 
-      (
-        <Row style={{ width: "100%" }}>
+  );
+  //ทำการเช็ค ถ้า isEdit เป็น false แสดงว่าไม่ใช้โหมดแก้ไขข้อมูล ดังนั้น content มีค่าดังนี้
+  if(!isEdit){
+    contents = (
+      <Row style={{ width: "100%" }}>
           <Col span={16}>
             <Row justify="start">
               {props.todo.title}
@@ -62,7 +61,13 @@ export default function Todo(props) {
             </Button>
           </Col>
         </Row>
-      )}
+    )
+  }
+
+  return (
+    <div style={{ width: "100%" }}>
+      {/* เรียก contens มาแสดง */}
+      {contents}
     </div>
   );
 }

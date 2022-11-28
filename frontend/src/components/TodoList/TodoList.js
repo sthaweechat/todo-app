@@ -116,6 +116,9 @@ export default function TodoList() {
             dataSource={todoList}
             renderItem={(todo) => (
               <List.Item>
+                {/* ทำการส่งข้อมูล deleteTodoItem ไปให้ todo โดยเรียกผ่าน delete*/}
+                {/* ทำการส่งข้อมูล todo ไปให้ todo โดยเรียกผ่าน todo*/}
+                {/* ทำการส่งข้อมูล fetchTodoList ไปให้ todo โดยเรียกผ่าน fetchData*/}
                 <Todo delete={deleteTodoItem} todo={todo} fetchData={fetchTodoList}/>
               </List.Item>
             )}
