@@ -7,30 +7,42 @@ const { Text } = Typography;
 export default function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const [inputField, setInputField] = useState("");
-  useEffect(() => {
-    setTodoList([
-      {
-        id: 1,
-        title: "Do Homework",
-        // status: false
-      },
-      {
-        id: 2,
-        title: "Do Homework",
-        // status: false
-      },
-      {
-        id: 3,
-        title: "Do Homework",
-        // status: false
-      },
-      {
-        id: 4,
-        title: "Do Homework",
-        // status: false
-      },
-    ]);
-  }, []);
+  // useEffect(() => {
+  //   setTodoList([
+  //     {
+  //       id: 1,
+  //       title: "Do Homework",
+  //       // status: false
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "Do Homework",
+  //       // status: false
+  //     },
+  //     {
+  //       id: 3,
+  //       title: "Do Homework",
+  //       // status: false
+  //     },
+  //     {
+  //       id: 4,
+  //       title: "Do Homework",
+  //       // status: false
+  //     },
+  //   ]);
+  // }, []);
+
+  //เพิ่ม todo
+  const addTodoItem = () => {
+  const newTodoList = [...todoList]; // ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
+    //ทำการ push ของใหม่ ไว้ใน newTodoList
+    newTodoList.push({
+      id: _.uniqueId(), //ใช้ uniqueId จาก lodash auto++
+      title: inputField, //นำค่าจาก inputField ที่พิมมาจาก input ไว้ใน title
+    });
+    setTodoList(newTodoList); // นำค่าที่ได้จาก newTodoList ไปไว้ในsetTodoList
+    setInputField(""); //reset ค่าinput หลังจากกด add
+  };
 
 
 
@@ -51,6 +63,7 @@ export default function TodoList() {
             <Button
               type="primary"
               style={{ width: "100%" }}
+              onClick={addTodoItem}
             >
               Add
             </Button>
