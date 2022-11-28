@@ -10,6 +10,16 @@ export default function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const [inputField, setInputField] = useState("");
 
+  //เอาข้อมูลจาก backend มาแสดง
+  const fetchTodoList = async () => {
+    const httpResponse = await axios.get("http://localhost:8000/todo-list");
+    setTodoList(httpResponse.data); //เอาค่าที่ดึงมาจาก httpResponse มาไว้ในsetTodoList
+  };
+
+  //ทำการแสดงข้อมูลที่ได้มาจาก backend
+  useEffect(()=>{
+    fetchTodoList();
+  },[])
 
   // useEffect(() => {
   //   setTodoList([
@@ -36,19 +46,23 @@ export default function TodoList() {
   //   ]);
   // }, []);
 
-  //เพิ่ม todo แบบไม่เชื่อมต่อ backend
-  const addTodoItem = () => {
-    const newTodoList = [...todoList]; // ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
-    //ทำการ push ของใหม่ ไว้ใน newTodoList
-    newTodoList.push({
-      id: _.uniqueId(), //ใช้ uniqueId จาก lodash auto++
-      title: inputField, //นำค่าจาก inputField ที่พิมมาจาก input ไว้ใน title
-    });
-    setTodoList(newTodoList); // นำค่าที่ได้จาก newTodoList ไปไว้ในsetTodoList
-    setInputField(""); //reset ค่าinput หลังจากกด add
-  };
+  // //เพิ่ม todo แบบไม่เชื่อมต่อ backend
+  // const addTodoItem = () => {
+  //   const newTodoList = [...todoList]; // ก็อปปี้ todoList จากอันเก่ามาอันใหม่แล้วเก็บไว้ใน newTodoList
+  //   //ทำการ push ของใหม่ ไว้ใน newTodoList
+  //   newTodoList.push({
+  //     id: _.uniqueId(), //ใช้ uniqueId จาก lodash auto++
+  //     title: inputField, //นำค่าจาก inputField ที่พิมมาจาก input ไว้ใน title
+  //   });
+  //   setTodoList(newTodoList); // นำค่าที่ได้จาก newTodoList ไปไว้ในsetTodoList
+  //   setInputField(""); //reset ค่าinput หลังจากกด add
+  // };
 
-
+  //เพิ่ม todo แบบเชื่อมต่อ backend
+  const addTodoItem = async() => {
+    await axios.post('http://localhost:8000/todo-list',{title: inputField});//ทำการเพิ่มข้อมูลtitle จาก inputField
+    fetchTodoList(); //ทำการอัพเดตข้อมูลมาใหม่
+  }
   //ลบ todo วิธี1
   // const deleteTodoItem = (id)=>{
   //   const newTodoList = todoList.filter(todo => todo.id !== id); //ทำการฟิลเตอร์แสดงยกเว้นไอดีที่เลือก
