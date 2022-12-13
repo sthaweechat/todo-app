@@ -18,9 +18,9 @@ export default function TodoList() {
   };
 
   //ทำการแสดงข้อมูลที่ได้มาจาก backend
-  useEffect(()=>{
+  useEffect(() => {
     fetchTodoList();
-  },[])
+  }, []);
 
   // useEffect(() => {
   //   setTodoList([
@@ -60,10 +60,12 @@ export default function TodoList() {
   // };
 
   //เพิ่ม todo แบบเชื่อมต่อ backend
-  const addTodoItem = async() => {
-    await axios.post('/todo-list',{title: inputField});//ทำการเพิ่มข้อมูลtitle จาก inputField
+  const addTodoItem = async () => {
+    await axios.post("/todo-list", { title: inputField }); //ทำการเพิ่มข้อมูลtitle จาก inputField
     fetchTodoList(); //ทำการอัพเดตข้อมูลมาใหม่
-  }
+    setInputField(""); //เคลียค่าinputfield หลังจากกด add
+    inputField.current.focus();
+  };
   //ลบ todo วิธี1
   // const deleteTodoItem = (id)=>{
   //   const newTodoList = todoList.filter(todo => todo.id !== id); //ทำการฟิลเตอร์แสดงยกเว้นไอดีที่เลือก
@@ -79,9 +81,9 @@ export default function TodoList() {
   // };
 
   //ลบ todo แบบเชื่อม backend
-  const deleteTodoItem = async(id) => {
-    await axios.delete(`/todo-list/${id}`);//ทำการลบข้อมูล
-    fetchTodoList();//ทำการอัพเดตข้อมูลมาใหม่
+  const deleteTodoItem = async (id) => {
+    await axios.delete(`/todo-list/${id}`); //ทำการลบข้อมูล
+    fetchTodoList(); //ทำการอัพเดตข้อมูลมาใหม่
   };
 
   return (
@@ -93,6 +95,7 @@ export default function TodoList() {
         <Row>
           <Col span={20}>
             <Input
+              autoFocus="true"
               value={inputField}
               onChange={(e) => setInputField(e.target.value)}
             />
@@ -119,7 +122,11 @@ export default function TodoList() {
                 {/* ทำการส่งข้อมูล deleteTodoItem ไปให้ todo โดยเรียกผ่าน delete*/}
                 {/* ทำการส่งข้อมูล todo ไปให้ todo โดยเรียกผ่าน todo*/}
                 {/* ทำการส่งข้อมูล fetchTodoList ไปให้ todo โดยเรียกผ่าน fetchData*/}
-                <Todo delete={deleteTodoItem} todo={todo} fetchData={fetchTodoList}/>
+                <Todo
+                  delete={deleteTodoItem}
+                  todo={todo}
+                  fetchData={fetchTodoList}
+                />
               </List.Item>
             )}
           />
