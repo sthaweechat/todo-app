@@ -95,7 +95,6 @@ export default function TodoList() {
         <Row>
           <Col span={20}>
             <Input
-              autoFocus="true"
               value={inputField}
               onChange={(e) => setInputField(e.target.value)}
             />
